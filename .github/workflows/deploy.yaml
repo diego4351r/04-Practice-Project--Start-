@@ -1,0 +1,23 @@
+name: Deploy lint, test, build
+on: [push, workflow_dispatch]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v3
+      - name: Lint
+        run: 'npm run lint'
+
+  test:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Test
+        run: 'npm run test'
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: build
+        run: 'npm run build'
